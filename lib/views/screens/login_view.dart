@@ -2,12 +2,45 @@ import 'package:altazaj_login/views/widgets/centered_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  Future<void> login() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xFF158780),
+        ),
+      ),
+    );
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddressController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        debugPrint('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    Navigator.pop(context);
+  }
 
   var emailAddressController = TextEditingController();
 
   var passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +109,7 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 50),
                 TextField(
                   controller: passwordController,
+                  obscureText: true,
                   cursorColor: const Color(0xFF158780),
                   decoration: InputDecoration(
                     hintText: 'Computer Password',
@@ -98,23 +132,8 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 GestureDetector(
-                  onTap: () async {
-                    try {
-                      final credential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: emailAddressController.text,
-                        password: passwordController.text,
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        print('The password provided is too weak.');
-                      } else if (e.code == 'email-already-in-use') {
-                        debugPrint(
-                            'The account already exists for that email.');
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
+                  onTap: () {
+                    login();
                   },
                   child: Container(
                     width: double.infinity,
@@ -135,6 +154,15 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('data'),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
