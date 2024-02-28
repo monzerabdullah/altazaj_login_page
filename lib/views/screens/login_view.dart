@@ -1,6 +1,7 @@
 import 'package:altazaj_login/views/widgets/centered_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({super.key});
@@ -10,7 +11,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  Future<void> login() async {
+  Future<void> addUser({required String email, required String password}) {
     showDialog(
       context: context,
       builder: (context) => const Center(
@@ -19,21 +20,40 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAddressController.text,
-        password: passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        debugPrint('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return users
+        .add({
+          'email': email,
+          'password': password,
+        })
+        .then((value) => debugPrint("User added successfully!"))
+        .catchError((error) => debugPrint("Failed to add user: $error"));
+
+    Navigator.pop(context);
+  }
+
+  Future<void> login() async {
+    // try {
+    // final credential =
+    //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //   email: emailAddressController.text,
+    //   password: passwordController.text,
+    // );
+
+    await addUser(
+      email: emailAddressController.text,
+      password: passwordController.text,
+    );
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'weak-password') {
+    //     print('The password provided is too weak.');
+    //   } else if (e.code == 'email-already-in-use') {
+    //     debugPrint('The account already exists for that email.');
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
     Navigator.pop(context);
   }
 
@@ -50,7 +70,7 @@ class _LoginViewState extends State<LoginView> {
           child: CenteredView(
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Information Technology Department',
                   style: TextStyle(
                     fontSize: 18.0,
