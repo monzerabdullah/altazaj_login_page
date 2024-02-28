@@ -50,6 +50,14 @@ class _LoginViewState extends State<LoginView> {
           child: CenteredView(
             child: Column(
               children: [
+                Text(
+                  'Information Technology Department',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                const SizedBox(height: 25),
+
                 Image.asset('assets/images/logo.jpeg'),
                 const SizedBox(height: 25),
                 const Text(
@@ -84,28 +92,28 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
-                TextField(
-                  cursorColor: const Color(0xFF158780),
-                  decoration: InputDecoration(
-                    hintText: 'Computer Login Name',
-                    hintStyle: TextStyle(
-                      color: Colors.grey[400],
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        color: Colors.grey[400]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF158780),
-                      ),
-                    ),
-                  ),
-                ),
+                // const SizedBox(height: 50),
+                // TextField(
+                //   cursorColor: const Color(0xFF158780),
+                //   decoration: InputDecoration(
+                //     hintText: 'Computer Login Name',
+                //     hintStyle: TextStyle(
+                //       color: Colors.grey[400],
+                //     ),
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(5),
+                //       borderSide: BorderSide(
+                //         color: Colors.grey[400]!,
+                //       ),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(5),
+                //       borderSide: const BorderSide(
+                //         color: Color(0xFF158780),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 50),
                 TextField(
                   controller: passwordController,
