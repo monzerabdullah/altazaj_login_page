@@ -9,12 +9,13 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyBRUVPTXHAuxNNOu4ZWDTY82PnhcsJTA84",
-        authDomain: "altazajlogin.firebaseapp.com",
-        projectId: "altazajlogin",
-        storageBucket: "altazajlogin.appspot.com",
-        messagingSenderId: "759635313955",
-        appId: "1:759635313955:web:a22b2b87b05f24d57ab896",
+        apiKey: "AIzaSyDnwl7AAyGHKSJxEDMPUJpRxzJXI07JrnU",
+        authDomain: "altazag.firebaseapp.com",
+        projectId: "altazag",
+        storageBucket: "altazag.appspot.com",
+        messagingSenderId: "783416128659",
+        appId: "1:783416128659:web:d3ddda7a774fd0cafe8966",
+        measurementId: "G-XCYN9GXKD4",
       ),
     );
   } else {
